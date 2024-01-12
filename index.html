@@ -64,46 +64,82 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>Example GitHub Actions workflow with an R package that generates developmental webR binaries</p>
-<div class="section level2">
-<h2 id="steps">Steps<a class="anchor" aria-label="anchor" href="#steps"></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li>Deployed</li>
-</ol>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_action</span><span class="op">(</span></span>
-<span>  url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/r-wasm/actions/v1/examples/deploy-cran-repo.yml"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Modify to include <code>packages: .</code> to trigger <code>pak</code> to treat the local environment as the package</p></li>
-<li><p>Enable GH pages</p></li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_pages</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Avoids:</p>
-<pre><code>Error: Creating Pages deployment failed
-Error: HttpError: Not Found
-    at /home/runner/work/_actions/actions/deploy-pages/v2/node_modules/@octokit/request/dist-node/index.js:86:1
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-    at createPagesDeployment (/home/runner/work/_actions/actions/deploy-pages/v2/src/internal/api-client.js:126:1)
-    at Deployment.create (/home/runner/work/_actions/actions/deploy-pages/v2/src/internal/deployment.js:80:1)
-    at main (/home/runner/work/_actions/actions/deploy-pages/v2/src/index.js:30:1)
-Error: Error: Failed to create deployment (status: 404) with build version 0e5457c152727daecc085994d0dd749653c6ab17. Ensure GitHub Pages has been enabled: https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/settings/pages</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li>Enable <code>main</code> or <code>master</code> branch deployments to <code>gh-pages</code> to avoid running into:</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Branch</span> <span class="st">"main"</span> is not allowed to deploy to github-pages due to environment protection rules.</span></code></pre></div>
-<p>Perform the following steps:</p>
+<p>Example GitHub Action workflow to generate developmental webR/R WASM Package binaries</p>
+</div>
+<div class="section level1">
+<h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h1>
+<p>Interested in having your R package automatically be built for <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> through a <a href="https://github.com/features/actions" class="external-link">GitHub Action</a>? If so, this is the repository for you! Here’s a summary of what you can find in the repository:</p>
 <ul>
-<li>Click the repository <strong>Settings</strong>.</li>
-<li>Select <strong>Environments</strong> under Code and automation section.</li>
-<li>Click on the <strong>github-pages</strong> environment.</li>
-<li>Under <strong>Deployment branches</strong> click on <strong>Add deployment branch or tag rule</strong>.</li>
-<li>Enter the pattern <code>main</code> or <code>master</code> depending on the name of the primary repository branch.</li>
+<li>
+<a href=".github/workflows/deploy-cran-repo.yml"><code>.github/workflows/deploy-cran-repo.yml</code></a>: Modified version of <a href="https://github.com/r-wasm/actions/blob/d21bf7da50e539df543bbee973087ec585deaba6/examples/deploy-cran-repo.yml" class="external-link"><code>r-wasm/actions</code>’ deploy-cran-repo.yml</a>
+</li>
+<li>
+<a href="DESCRIPTION"><code>DESCRIPTION</code></a>: Standard description information for an R package</li>
+<li>
+<a href="R/in-webr.R"><code>R/in-webr.R</code></a>: Check to see if we’re inside of webR or not.</li>
 </ul>
+<p>You can view the pushed webR package binary parts by looking at the <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages" class="external-link"><code>gh-pages</code></a> branch of the repository. Specifically, we can see binary package data <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages/bin/emscripten/contrib/4.3" class="external-link"><code>bin/emscripten/contrib/4.3</code></a> and the package information in <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages/src/contrib" class="external-link"><code>src/contrib</code></a>. You can read more about package repositories that are CRAN-like in the <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Setting-up-a-package-repository" class="external-link">R Administration: 6.6 Setting up a package repository</a>.</p>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>You can re-create the necessary parts to automatically compile R WASM package binaries and make them available on GitHub Pages with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"usethis"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"usethis"</span><span class="op">)</span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Ensure GitHub Pages is setup</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_pages</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Obtain the modified version of the rwasm repo setup</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_action</span><span class="op">(</span></span>
+<span>  <span class="st">"https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/blob/main/.github/workflows/deploy-cran-repo.yml"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Viola! Binaries will automatically be built on each new commit and published on the repository’s website served by GitHub Pages.</p>
+</div>
+<div class="section level2">
+<h2 id="accessing-binaries">Accessing Binaries<a class="anchor" aria-label="anchor" href="#accessing-binaries"></a>
+</h2>
+<p>Inside of a webR session, you can access the built binaries by using the repository’s GitHub Pages URL, e.g.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name</span></code></pre></div>
+<p>This can be set either using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> or specifying the location in each <code>webr::install()</code> call.</p>
+<p>The easiest is probably to define the location webR should search for in <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Run once at the start of the session</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
+<span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://gh-username.github.io/repo-name"</span>, </span>
+<span>            <span class="st">"https://repo.r-wasm.org/"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Call</span></span>
+<span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span><span class="op">)</span></span></code></pre></div>
+<p>Otherwise, you can specify it each time:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span>, <span class="st">"https://gh-username.github.io/repo-name"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="verify">Verify<a class="anchor" aria-label="anchor" href="#verify"></a>
+</h2>
+<p>Go to the <a href="https://webr.r-wasm.org/v0.2.2/" class="external-link">webR REPL Editor</a> (pinned to v0.2.2) and run the following:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check if package `{demorwasmbinary}` is installed</span></span>
+<span><span class="st">"demorwasmbinary"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>,<span class="st">"Package"</span><span class="op">]</span></span>
+<span><span class="co"># Install the binary from a repository</span></span>
+<span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span></span>
+<span>  <span class="st">"demorwasmbinary"</span>, </span>
+<span>  repos <span class="op">=</span> <span class="st">"https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Check to see if the function works</span></span>
+<span><span class="fu">demorwasmbinary</span><span class="fu">::</span><span class="fu"><a href="reference/in_webr.html">in_webr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># View help documentation</span></span>
+<span><span class="op">?</span><span class="fu">demorwasmbinary</span><span class="fu">::</span><span class="va"><a href="reference/in_webr.html">in_webr</a></span></span></code></pre></div>
+<p>You should receive:</p>
+<div class="figure">
+<img src="reference/figures/demo-of-package-working-in-webr-repl.png" alt=""><p class="caption">Screenshot of the webR REPL editor showing how to download from repository outside of repo.r-wasm.org an R package binary</p>
 </div>
 </div>
+</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
