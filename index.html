@@ -88,6 +88,18 @@ Error: HttpError: Not Found
     at Deployment.create (/home/runner/work/_actions/actions/deploy-pages/v2/src/internal/deployment.js:80:1)
     at main (/home/runner/work/_actions/actions/deploy-pages/v2/src/index.js:30:1)
 Error: Error: Failed to create deployment (status: 404) with build version 0e5457c152727daecc085994d0dd749653c6ab17. Ensure GitHub Pages has been enabled: https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/settings/pages</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Enable <code>main</code> or <code>master</code> branch deployments to <code>gh-pages</code> to avoid running into:</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Branch</span> <span class="st">"main"</span> is not allowed to deploy to github-pages due to environment protection rules.</span></code></pre></div>
+<p>Perform the following steps:</p>
+<ul>
+<li>Click the repository <strong>Settings</strong>.</li>
+<li>Select <strong>Environments</strong> under Code and automation section.</li>
+<li>Click on the <strong>github-pages</strong> environment.</li>
+<li>Under <strong>Deployment branches</strong> click on <strong>Add deployment branch or tag rule</strong>.</li>
+<li>Enter the pattern <code>main</code> or <code>master</code> depending on the name of the primary repository branch.</li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
