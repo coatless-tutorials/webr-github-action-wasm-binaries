@@ -10,9 +10,12 @@
     <loc>https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/index.html</loc>
   </url>
   <url>
-    <loc>https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/reference/index.html</loc>
+    <loc>https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/reference/demorwasmbinary-package.html</loc>
   </url>
   <url>
-    <loc>https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/reference/is_r_using_wasm.html</loc>
+    <loc>https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/reference/in_webr.html</loc>
+  </url>
+  <url>
+    <loc>https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/reference/index.html</loc>
   </url>
 </urlset>
