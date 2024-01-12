@@ -116,12 +116,26 @@
 <p>Otherwise, you can specify it each time:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span>, <span class="st">"https://gh-username.github.io/repo-name"</span><span class="op">)</span></span></code></pre></div>
+<div>
+<blockquote>
+<p><strong>Important</strong></p>
+<p>Please make sure the repository’s <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https#enforcing-https-for-your-github-pages-site" class="external-link">GitHub Pages website is available over <code>HTTPS</code></a> not <code>HTTP</code> (notice the lack of an <code>s</code>). You can verify this option was selected by:</p>
+<ol style="list-style-type: decimal">
+<li>Going to the repository’s <strong>Settings</strong> page</li>
+<li>Selecting <strong>Pages</strong> under <strong>Code and automation</strong>
+</li>
+<li>Checking the <strong>Enforce HTTPS</strong> button.</li>
+</ol>
+<p>Otherwise, you will receive the error message of:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Warning<span class="sc">:</span> unable to access index <span class="cf">for</span> repository http<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name<span class="sc">/</span>bin<span class="sc">/</span>emscripten<span class="sc">/</span>contrib<span class="sc">/</span><span class="fl">4.3</span></span></code></pre></div>
+</blockquote>
+</div>
 </div>
 <div class="section level2">
 <h2 id="verify">Verify<a class="anchor" aria-label="anchor" href="#verify"></a>
 </h2>
 <p>Go to the <a href="https://webr.r-wasm.org/v0.2.2/" class="external-link">webR REPL Editor</a> (pinned to v0.2.2) and run the following:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check if package `{demorwasmbinary}` is installed</span></span>
 <span><span class="st">"demorwasmbinary"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>,<span class="st">"Package"</span><span class="op">]</span></span>
 <span><span class="co"># Install the binary from a repository</span></span>
