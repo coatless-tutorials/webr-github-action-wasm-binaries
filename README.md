@@ -1,5 +1,5 @@
 
-# webr-github-action-wasm-binaries
+# GitHub Actions for Building R WASM Package & {pkgdown} Website
 
 <!-- badges: start -->
 
@@ -7,8 +7,21 @@
 [![webr-build-binary](https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/actions/workflows/deploy-cran-repo.yml/badge.svg)](https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/actions/workflows/deploy-cran-repo.yml)
 <!-- badges: end -->
 
-Example GitHub Action workflow to generate developmental webR/R WASM
-Package binaries
+Sample GitHub Action workflows to generate developmental webR/R WASM
+Package binaries alongside of a `{pkgdown}` website.
+
+This repository is part of a series of repositories exploring the topic.
+
+- [Org-focused webR/WASM Package Repository without a `{pkgdown}`
+  website
+  (Preferred)](https://github.com/coatless-tutorials/webr-org-gh-action)
+- [Unified GitHub Action Deployment using artifacts of R WASM Package
+  binaries and {pkgdown}
+  website](https://github.com/coatless-tutorials/webr-unified-gh-workflow)
+- **[Separate GitHub Action Deployment onto `gh-pages` branch of R WASM
+  Package binaries and {pkgdown}
+  website](https://github.com/coatless-tutorials/webr-github-action-wasm-binaries)
+  \[This repository\]**
 
 # Overview
 
