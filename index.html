@@ -60,97 +60,165 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="github-actions-for-building-r-wasm-package--pkgdown-website">GitHub Actions for Building R WASM Package &amp; {pkgdown} Website<a class="anchor" aria-label="anchor" href="#github-actions-for-building-r-wasm-package--pkgdown-website"></a>
+<div class="page-header"><h1 id="tutorial-github-actions-for-separately-building-r-wasm-packages--a-pkgdown-website">Tutorial: GitHub Actions for Separately Building R WASM Packages &amp; a {pkgdown} Website<a class="anchor" aria-label="anchor" href="#tutorial-github-actions-for-separately-building-r-wasm-packages--a-pkgdown-website"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>Sample GitHub Action workflows to generate developmental webR/R WASM Package binaries alongside of a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website.</p>
-<p>This repository is part of a series of repositories exploring the topic.</p>
-<ul>
-<li><a href="https://github.com/coatless-tutorials/webr-org-gh-action" class="external-link">Org-focused webR/WASM Package Repository without a <code>{pkgdown}</code> website (Preferred)</a></li>
-<li><a href="https://github.com/coatless-tutorials/webr-unified-gh-workflow" class="external-link">Unified GitHub Action Deployment using artifacts of R WASM Package binaries and {pkgdown} website</a></li>
-<li><strong><a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries" class="external-link">Separate GitHub Action Deployment onto <code>gh-pages</code> branch of R WASM Package binaries and {pkgdown} website</a> [This repository]</strong></li>
-</ul>
-</div>
-<div class="section level1">
-<h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h1>
-<p>Interested in having your R package automatically be built for <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> through a <a href="https://github.com/features/actions" class="external-link">GitHub Action</a>? If so, this is the repository for you! Here’s a summary of what you can find in the repository:</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>Welcome to this tutorial on automating separate build processes for compiling an R package for <a href="https://docs.r-wasm.org/webr/latest/" class="external-link">webR</a> and creating a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website using GitHub Actions. In this guide, you will find sample GitHub Action workflows designed to generate developmental webR/R WASM Package binaries alongside a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website. If you’re eager to streamline the process of building and deploying your R packages for webR while also creating a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website, you’ve come to the right place.</p>
+<p>This repository is part of a series exploring three different approaches:</p>
 <ul>
 <li>
-<a href=".github/workflows/deploy-cran-repo.yml"><code>.github/workflows/deploy-cran-repo.yml</code></a>: Modified version of <a href="https://github.com/r-wasm/actions/blob/d21bf7da50e539df543bbee973087ec585deaba6/examples/deploy-cran-repo.yml" class="external-link"><code>r-wasm/actions</code>’ deploy-cran-repo.yml</a>
+<a href="https://github.com/coatless-tutorials/webr-org-gh-action" class="external-link">Org-focused webR/WASM Package Repository without a <code>{pkgdown}</code> website</a>
+<ul>
+<li>This repository serves as an example implementation of the webR Project’s <a href="https://r-wasm.github.io/rwasm/articles/github-actions.html" class="external-link">Build R packages using GitHub Actions</a> documentation. It focuses on creating an organizational webR/WASM Package Repository without the inclusion of a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website that is meant to be triggered through workflow dispatches or changes to a <code>packages</code> file. Explore this repository for insights into structuring your own organization-centric webR package repository using GitHub Actions.</li>
+</ul>
 </li>
 <li>
-<a href="DESCRIPTION"><code>DESCRIPTION</code></a>: Standard description information for an R package</li>
-<li>
-<a href="R/in-webr.R"><code>R/in-webr.R</code></a>: Check to see if we’re inside of webR or not.</li>
+<a href="https://github.com/coatless-tutorials/webr-unified-gh-workflow" class="external-link">Unified GitHub Action Deployment using artifacts of R WASM Package binaries and {pkgdown} website</a>
+<ul>
+<li>This repository introduces a unified approach to GitHub Action deployment by using artifacts. Unlike the previous strategy, this allows for the simultaneous deployment of R WASM binaries and the associated <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website by using artifacts. This approach helps prevent a continuous increase in repository size. Explore this repository to understand how the use of artifacts can streamline your deployment process while maintaining a clean and efficient version control history.</li>
 </ul>
-<p>You can view the pushed webR package binary parts by looking at the <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages" class="external-link"><code>gh-pages</code></a> branch of the repository. Specifically, we can see binary package data <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages/bin/emscripten/contrib/4.3" class="external-link"><code>bin/emscripten/contrib/4.3</code></a> and the package information in <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages/src/contrib" class="external-link"><code>src/contrib</code></a>. You can read more about package repositories that are CRAN-like in the <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Setting-up-a-package-repository" class="external-link">R Administration: 6.6 Setting up a package repository</a>.</p>
+</li>
+<li>
+<strong><a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries" class="external-link">Separate GitHub Action Deployment onto <code>gh-pages</code> branch of R WASM Package binaries and {pkgdown} website</a> [This repository]</strong>
+<ul>
+<li>This repository adopts a workflow approach familiar to R package developers using <code>usethis</code>. It employs separate GitHub Actions for generating the R WASM package binaries and <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website. The key aspect of this approach is the merging and deployment of both outputs through the <code>gh-pages</code> branch. This strategy enhances clarity in tracking file changes and provides a transparent view of the deployed content. Explore this repository to understand how this approach can streamline your R package deployment workflow.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="key-contents">Key Contents<a class="anchor" aria-label="anchor" href="#key-contents"></a>
+</h2>
+<p>Here’s a quick summary of what you can find in the repository:</p>
+<ul>
+<li>
+<a href=".github/workflows/deploy-cran-repo.yml"><code>.github/workflows/deploy-cran-repo.yml</code></a>: A heavily modified version of <a href="https://github.com/r-wasm/actions/blob/d21bf7da50e539df543bbee973087ec585deaba6/examples/deploy-cran-repo.yml" class="external-link"><code>r-wasm/actions</code>’ deploy-cran-repo.yml</a>, leveraging the <a href="https://github.com/r-wasm/actions/blob/d21bf7da50e539df543bbee973087ec585deaba6/build-rwasm/README.md" class="external-link"><code>r-wasm/actions/build-rwasm</code></a> action to create R WASM packages and <a href="https://github.com/JamesIves/github-pages-deploy-action" class="external-link"><code>JamesIves/github-pages-deploy-action</code></a> to deploy the packages onto a GitHub Pages branch.</li>
+<li>
+<a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/blob/b68770599449e79b92644173485cec4ee87b7f59/.github/workflows/pkgdown.yaml" class="external-link"><code>.github/workflows/pkgdown.yml</code></a>: Standard <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> GitHub Action from <a href="https://github.com/r-lib/actions/blob/46e9e5f2d0dd3aa6ee94b8f49bcc146201e90959/examples/pkgdown.yaml" class="external-link"><code>r-lib/actions/examples/pkgdown.yaml</code></a>.</li>
+<li>
+<a href="_pkgdown.yml"><code>_pkgdown.yml</code></a>: Usual configuration for a <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website.</li>
+<li>
+<a href="DESCRIPTION"><code>DESCRIPTION</code></a>: Contains usual meta data information for an R package.</li>
+<li>
+<a href="R/in-webr.R"><code>R/in-webr.R</code></a>: A script designed to check if the R package is being run inside a webR environment.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="deployment-strategy">Deployment Strategy<a class="anchor" aria-label="anchor" href="#deployment-strategy"></a>
+</h2>
+<p>The deployment strategy for this repository involves pushing built R WASM Packages and the associated <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website directly into the <code>gh-pages</code> branch. You can view the pushed webR package binary parts by looking at the <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages" class="external-link"><code>gh-pages</code></a> branch of the repository. Specifically, we can see binary package data <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages/bin/emscripten/contrib/4.3" class="external-link"><code>bin/emscripten/contrib/4.3</code></a> and the package information in <a href="https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/tree/gh-pages/src/contrib" class="external-link"><code>src/contrib</code></a>. The other files form the basis for the <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website. You can learn more about package repositories that are CRAN-like in the <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Setting-up-a-package-repository" class="external-link">R Administration: 6.6 Setting up a package repository</a>.</p>
+<p>It’s essential to note that a potential drawback to this approach is the gradual increase in the repository size with each commit. This expansion occurs as the webR binary for the package, along with its dependencies, is stored in the <code>gh-pages</code> branch. On the positive side, utilizing version control tools allows for clear visibility into the changes between deployments.</p>
+</div>
 <div class="section level2">
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
-<p>You can re-create the necessary parts to automatically compile R WASM package binaries and make them available on GitHub Pages with:</p>
+<p>For the setup, we’re going to aim to use <a href="https://github.com/r-lib/usethis" class="external-link"><code>{usethis}</code> R package</a> to enable GitHub Pages and retrieve a workflow for building R WASM packages.</p>
+<div class="section level3">
+<h3 id="setup-github-pages-on-the-repository">Setup Github Pages on the Repository<a class="anchor" aria-label="anchor" href="#setup-github-pages-on-the-repository"></a>
+</h3>
+<p>We can enable GitHub pages directly from <code>usethis</code> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"usethis"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"usethis"</span><span class="op">)</span><span class="op">}</span></span>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"usethis"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"usethis"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
 <span></span>
-<span></span>
-<span><span class="co"># Ensure GitHub Pages is setup</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_pages</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Obtain the modified version of the rwasm repo setup</span></span>
+<span><span class="co"># Ensure GitHub Pages is set up</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_pages</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Another option is directly enabling GitHub Pages on the repository by following:</p>
+<ol style="list-style-type: decimal">
+<li>Click on the <strong>Settings</strong> tab for the repository</li>
+<li>Under “Code and automation”, select the <strong>Pages</strong> menu item.</li>
+<li>Under the “Source” option select <strong>Deploy from branch</strong> from the drop down.</li>
+<li>Under the “Branch” option, select the <strong><code>gh-pages</code></strong> branch with the deploy directory of <strong><code>/ (root)</code></strong> and press <strong>Save</strong>.</li>
+<li>In the “Custom Domain” settings, make sure that <strong>Enforce HTTPS</strong> is checked.</li>
+</ol>
+<div class="figure">
+<img src="reference/figures/gh-pages-setup-options.png" alt=""><p class="caption">Example configuration of GitHub Pages</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="setup-the-r-wasm-package-build-github-action">Setup the R WASM Package Build GitHub Action<a class="anchor" aria-label="anchor" href="#setup-the-r-wasm-package-build-github-action"></a>
+</h3>
+<p>Next, obtain a copy of the modified GitHub Action workflow that compiles the R WASM package binaries and deploys them onto GitHub Pages by committing into the <code>gh-pages</code> branch with the following R code:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Obtain the modified version of the rwasm repo setup</span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_github_action</span><span class="op">(</span></span>
 <span>  <span class="st">"https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/blob/main/.github/workflows/deploy-cran-repo.yml"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Viola! Binaries will automatically be built on each new commit and published on the repository’s website served by GitHub Pages.</p>
+<p>Or, you can re-create what <code>usethis</code> is doing by using:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the GitHub workflows directory if not present</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">".github/workflows"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the GitHub Action workflow into the repository</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">"https://github.com/coatless-tutorials/webr-github-action-wasm-binaries/blob/main/.github/workflows/deploy-cran-repo.yml"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">".github/workflows/deploy-cran-repo.yml"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Block R build from including the GitHub folder</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="st">"^\.github$"</span>, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> <span class="fu">file</span>(<span class="st">".github/workflows/deploy-cran-repo.yml"</span>, <span class="st">"a"</span>) </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>That’s it! Binaries will now be automatically built upon each new commit and published on the repository’s website served by GitHub Pages.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="accessing-binaries">Accessing Binaries<a class="anchor" aria-label="anchor" href="#accessing-binaries"></a>
 </h2>
-<p>Inside of a webR session, you can access the built binaries by using the repository’s GitHub Pages URL, e.g.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name</span></code></pre></div>
-<p>This can be set either using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> or specifying the location in each <code>webr::install()</code> call.</p>
-<p>The easiest is probably to define the location webR should search for in <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>In a webR session, access the built binaries using the repository’s GitHub Pages URL, for example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name</span></code></pre></div>
+<p>You can set this either using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> or specifying the location in each <code>webr::install()</code> call. To define the location webR should search for in <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run once at the start of the session</span></span>
+<span><span class="va">list_of_repos</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"https://gh-username.github.io/repo-name"</span>, </span>
+<span>    <span class="st">"https://other-gh-username.github.io/another-repo"</span>, </span>
+<span>    <span class="st">"https://username.r-universe.dev"</span>, </span>
+<span>    <span class="st">"https://repo.r-wasm.org/"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set the repository URLs</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
-<span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://gh-username.github.io/repo-name"</span>, </span>
-<span>            <span class="st">"https://repo.r-wasm.org/"</span><span class="op">)</span></span>
+<span>  repos <span class="op">=</span> <span class="va">list_of_repos</span>,</span>
+<span>  webr_pkg_repos <span class="op">=</span> <span class="va">list_of_repos</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Call</span></span>
 <span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span><span class="op">)</span></span></code></pre></div>
-<p>Otherwise, you can specify it each time:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span>, <span class="st">"https://gh-username.github.io/repo-name"</span><span class="op">)</span></span></code></pre></div>
-<div>
+<p>Alternatively, the <code>repos</code> can be specified each time:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span>, repos <span class="op">=</span> <span class="st">"https://gh-username.github.io/repo-name"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span>, repos <span class="op">=</span> <span class="va">list_of_repos</span><span class="op">)</span></span></code></pre></div>
 <blockquote>
-<p><strong>Important</strong></p>
-<p>Please make sure the repository’s <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https#enforcing-https-for-your-github-pages-site" class="external-link">GitHub Pages website is available over <code>HTTPS</code></a> not <code>HTTP</code> (notice the lack of an <code>s</code>). You can verify this option was selected by:</p>
-<ol style="list-style-type: decimal">
-<li>Going to the repository’s <strong>Settings</strong> page</li>
-<li>Selecting <strong>Pages</strong> under <strong>Code and automation</strong>
-</li>
-<li>Checking the <strong>Enforce HTTPS</strong> button.</li>
-</ol>
-<p>Otherwise, you will receive the error message of:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Warning<span class="sc">:</span> unable to access index <span class="cf">for</span> repository http<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name<span class="sc">/</span>bin<span class="sc">/</span>emscripten<span class="sc">/</span>contrib<span class="sc">/</span><span class="fl">4.3</span></span></code></pre></div>
+<p>[!IMPORTANT]</p>
+<p>Ensure the repository’s <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https#enforcing-https-for-your-github-pages-site" class="external-link">GitHub Pages website is available over <code>HTTPS</code></a> (not <code>HTTP</code>). Verify this option in the repository’s <strong>Settings</strong> page under <strong>Code and automation</strong> &gt; <strong>Pages</strong> &gt; <strong>Enforce HTTPS</strong>.</p>
+<p>Otherwise, you might encounter an error:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Warning<span class="sc">:</span> unable to access index <span class="cf">for</span> repository http<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name<span class="sc">/</span>bin<span class="sc">/</span>emscripten<span class="sc">/</span>contrib<span class="sc">/</span><span class="fl">4.3</span></span></code></pre></div>
 </blockquote>
-</div>
 </div>
 <div class="section level2">
 <h2 id="verify">Verify<a class="anchor" aria-label="anchor" href="#verify"></a>
 </h2>
-<p>Go to the <a href="https://webr.r-wasm.org/v0.2.2/" class="external-link">webR REPL Editor</a> (pinned to v0.2.2) and run the following:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>Visit the <a href="https://webr.r-wasm.org/v0.2.2/" class="external-link">webR REPL Editor</a> (pinned to v0.2.2) and run the following:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check if package `{demorwasmbinary}` is installed</span></span>
 <span><span class="st">"demorwasmbinary"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>,<span class="st">"Package"</span><span class="op">]</span></span>
+<span></span>
 <span><span class="co"># Install the binary from a repository</span></span>
 <span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span></span>
 <span>  <span class="st">"demorwasmbinary"</span>, </span>
 <span>  repos <span class="op">=</span> <span class="st">"https://tutorials.thecoatlessprofessor.com/webr-github-action-wasm-binaries/"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co"># Check to see if the function works</span></span>
+<span></span>
+<span><span class="co"># Check if the function works</span></span>
 <span><span class="fu">demorwasmbinary</span><span class="fu">::</span><span class="fu"><a href="reference/in_webr.html">in_webr</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># View help documentation</span></span>
 <span><span class="op">?</span><span class="fu">demorwasmbinary</span><span class="fu">::</span><span class="va"><a href="reference/in_webr.html">in_webr</a></span></span></code></pre></div>
 <p>You should receive:</p>
@@ -159,7 +227,6 @@
 </div>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
