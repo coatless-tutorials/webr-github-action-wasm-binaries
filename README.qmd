@@ -141,6 +141,22 @@ writeLines(
 That's it! Binaries will now be automatically built upon each new commit and 
 published on the repository's website served by GitHub Pages.
 
+## Observing Data Uploaded 
+
+When the workflow completes, the packages and `{pkgdown}` website are uploaded 
+onto GitHub Pages through an artifact. The artifacts are stored for 90 days 
+(by default) and can be found under the workflow summary:
+
+1. Click on the **Actions** tab for the repository
+2. Select a completed build
+3. Press the **Summary** option
+4. Under "Artifacts", click on **github-pages** to download the built repository
+
+![](man/figures/github-actions-webr-repo-github-pages-artifact.png)
+
+**Note:** The size of the `github-pages` deployment is 9.88 MB of compressed space, 
+while the size of the `rwasmrepo` is only 3.97 MB of the total compressed space.
+
 ## Accessing Binaries
 
 In a webR session, access the built binaries using the repository's GitHub Pages URL, for example:
