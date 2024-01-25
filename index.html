@@ -168,6 +168,19 @@
 </div>
 </div>
 <div class="section level2">
+<h2 id="observing-data-uploaded">Observing Data Uploaded<a class="anchor" aria-label="anchor" href="#observing-data-uploaded"></a>
+</h2>
+<p>When the workflow completes, the packages and <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a> website are uploaded onto GitHub Pages through an artifact. The artifacts are stored for 90 days (by default) and can be found under the workflow summary:</p>
+<ol style="list-style-type: decimal">
+<li>Click on the <strong>Actions</strong> tab for the repository</li>
+<li>Select a completed build</li>
+<li>Press the <strong>Summary</strong> option</li>
+<li>Under “Artifacts”, click on <strong>github-pages</strong> to download the built repository</li>
+</ol>
+<p><img src="reference/figures/github-actions-webr-repo-github-pages-artifact.png"></p>
+<p><strong>Note:</strong> The size of the <code>github-pages</code> deployment is 9.88 MB of compressed space, while the size of the <code>rwasmrepo</code> is only 3.97 MB of the total compressed space.</p>
+</div>
+<div class="section level2">
 <h2 id="accessing-binaries">Accessing Binaries<a class="anchor" aria-label="anchor" href="#accessing-binaries"></a>
 </h2>
 <p>In a webR session, access the built binaries using the repository’s GitHub Pages URL, for example:</p>
