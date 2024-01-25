@@ -2,5 +2,5 @@ Package: demorwasmbinary
 Version: 0.0.1
 Depends: R (>= 4.3.0)
 License: GPL (>= 2)
-MD5sum: a5f96a74994ab3d655c3861a030f1be0
+MD5sum: 824c698a9202679874a5290a8615fd5e
 NeedsCompilation: no
