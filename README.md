@@ -164,7 +164,7 @@ download.file(
 # Block R build from including the GitHub folder
 writeLines(
   text = "^\.github$", 
-  con = file(".github/workflows/deploy-cran-repo.yml", "a") 
+  con = file(".Rbuildignore", "a") 
 )
 ```
 
