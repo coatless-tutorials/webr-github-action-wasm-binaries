@@ -182,9 +182,35 @@ GitHub Pages URL, for example:
 
     https://gh-username.github.io/repo-name
 
-You can set this either using `options()` or specifying the location in
-each `webr::install()` call. To define the location webR should search
-for in `options()`:
+Depending on where you are using the custom R WASM package binary, you
+can register this repository in different ways:
+
+1.  Using the `repos` key inside of the `quarto-webr` extension;
+2.  Using `options()` to set values for both `repos` and
+    `webr_pkg_repos`; or,
+3.  Using the `repos` parameter in each `webr::install()` call.
+
+### `repos` Document key in `{quarto-webr}`
+
+With version v0.4.0 of the `{quarto-webr}` extension, the repository can
+be included by using the [`repos` key in the document
+header](https://quarto-webr.thecoatlessprofessor.com/qwebr-using-r-packages.html#custom-repositories):
+
+``` md
+---
+webr:
+  packages: ['pkgname']
+  repos:
+    - https://gh-username.github.io/repo-name
+filters:
+ - webr
+---
+```
+
+### Specifying repo urls with `options()`
+
+To define the location webR should search for in `options()`, we need to
+set both `repos` and `webr_pkg_repos`.
 
 ``` r
 ## Run once at the start of the session
@@ -215,7 +241,10 @@ webr::install("pkgname")
 > however, other R functions like `available.packages()` check the
 > `repos` parameter.
 
-Alternatively, the `repos` can be specified each time:
+### Specifying `repos` in `webr::install()`
+
+The `repos` parameter may also be specified in the `webr::install()`
+command each time you need to install a package from a custom location:
 
 ``` r
 webr::install("pkgname", repos = "https://gh-username.github.io/repo-name")
