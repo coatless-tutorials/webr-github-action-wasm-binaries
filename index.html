@@ -192,6 +192,10 @@
 <span></span>
 <span><span class="co"># Install the R WASM Package</span></span>
 <span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p>[!NOTE]</p>
+<p>This is different than the <code>repos</code> option one would usually set since webR only checks the <a href="https://github.com/r-wasm/webr/blob/010223433079d1a9ef3eb9bbf73d8eccb38e6adc/packages/webr/R/install.R#L23" class="external-link"><code>webr_pkg_repos</code> key</a>; however, other R functions like <code><a href="https://rdrr.io/r/utils/available.packages.html" class="external-link">available.packages()</a></code> check the <code>repos</code> parameter.</p>
+</blockquote>
 <p>Alternatively, the <code>repos</code> can be specified each time:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span>, repos <span class="op">=</span> <span class="st">"https://gh-username.github.io/repo-name"</span><span class="op">)</span></span>
