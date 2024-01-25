@@ -203,6 +203,14 @@ options(
 webr::install("pkgname")
 ```
 
+> [!NOTE]
+>
+> This is different than the `repos` option one would usually set since
+> webR only checks the [`webr_pkg_repos`
+> key](https://github.com/r-wasm/webr/blob/010223433079d1a9ef3eb9bbf73d8eccb38e6adc/packages/webr/R/install.R#L23);
+> however, other R functions like `available.packages()` check the
+> `repos` parameter.
+
 Alternatively, the `repos` can be specified each time:
 
 ``` r
