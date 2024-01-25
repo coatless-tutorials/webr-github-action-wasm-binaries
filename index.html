@@ -162,7 +162,7 @@
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Block R build from including the GitHub folder</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="st">"^\.github$"</span>, </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> <span class="fu">file</span>(<span class="st">".github/workflows/deploy-cran-repo.yml"</span>, <span class="st">"a"</span>) </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">con =</span> <span class="fu">file</span>(<span class="st">".Rbuildignore"</span>, <span class="st">"a"</span>) </span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>That’s it! Binaries will now be automatically built upon each new commit and published on the repository’s website served by GitHub Pages.</p>
 </div>
