@@ -57,6 +57,10 @@ approaches:
     the deployed content. Explore this repository to understand how this
     approach can streamline your R package deployment workflow.
 
+Another approach would be to use
+[r-universe.dev](https://ropensci.org/blog/2023/11/17/runiverse-wasm/)
+to automatically build and supply R WASM package binaries.
+
 ## Key Contents
 
 Here’s a quick summary of what you can find in the repository:
