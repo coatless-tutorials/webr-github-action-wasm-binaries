@@ -183,7 +183,9 @@ each `webr::install()` call. To define the location webR should search
 for in `options()`:
 
 ``` r
-# Run once at the start of the session
+## Run once at the start of the session
+
+# Specify where to search for the R WASM packages
 list_of_repos = c(
     "https://gh-username.github.io/repo-name", 
     "https://other-gh-username.github.io/another-repo", 
@@ -197,7 +199,7 @@ options(
   webr_pkg_repos = list_of_repos
 )
 
-# Call
+# Install the R WASM Package
 webr::install("pkgname")
 ```
 
