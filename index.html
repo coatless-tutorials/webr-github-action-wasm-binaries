@@ -174,7 +174,9 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>gh<span class="sc">-</span>username.github.io<span class="sc">/</span>repo<span class="sc">-</span>name</span></code></pre></div>
 <p>You can set this either using <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> or specifying the location in each <code>webr::install()</code> call. To define the location webR should search for in <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Run once at the start of the session</span></span>
+<code class="sourceCode R"><span><span class="co">## Run once at the start of the session</span></span>
+<span></span>
+<span><span class="co"># Specify where to search for the R WASM packages</span></span>
 <span><span class="va">list_of_repos</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"https://gh-username.github.io/repo-name"</span>, </span>
 <span>    <span class="st">"https://other-gh-username.github.io/another-repo"</span>, </span>
@@ -188,7 +190,7 @@
 <span>  webr_pkg_repos <span class="op">=</span> <span class="va">list_of_repos</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Call</span></span>
+<span><span class="co"># Install the R WASM Package</span></span>
 <span><span class="fu">webr</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"pkgname"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, the <code>repos</code> can be specified each time:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
